@@ -1,0 +1,31 @@
+{% extends 'BlogArticle/base.html' %}
+{% block title %}Delete Article{% endblock title %}
+{% block content %}
+
+<div class='container'>
+    
+    <div class='form-group'>
+        <form method="POST">
+            {% csrf_token %}
+
+            <br/><br/><br/>
+            <div class="container text-center" style="width: 30rem;">                    
+                <div class="text-center"> 
+                    <div class="sidebar-widget subscribe mb-5">
+                        <h4 class="text-center widget-title">Delete confirmation</h4>
+                        <h3>if you delete your post you will don't see this article again !!!<h3><br/>
+                        <p>
+                            really, are you sure ?!<br/>
+                        </p>
+                        you will delete {{ post.title }} <br/> <br/> 
+                            <button class="btn btn-primary mt-3">Sure</button>
+                        </div>
+                       
+                    </div>          
+                </div>
+            </div>
+
+    </div>
+</div>
+<br/><br/><br/>
+{% endblock content %}

@@ -1,0 +1,40 @@
+{% extends 'BlogArticle/base.html' %}
+{% block title %}Register{% endblock title %}
+{% block content %}
+
+
+<br/><br/><br/>
+<div class="container text-center" style="width: 30rem;">                    
+    <div class="text-center"> 
+        <div class="sidebar-widget subscribe mb-5">
+            <form method='POST'>
+                <h4 class="text-center widget-title">Registration</h4>
+                {% csrf_token %}
+                {{ form.username }}<br/>
+                {{ form.email }}<br/>
+                {{ form.first_name }}<br/>
+                {{ form.last_name }}<br/>
+                {{ form.password1 }}<br/>
+                {{ form.password2 }}<br/>
+                {% if user.is_authenticated %}
+                
+                <div class="d-grid gap-2">
+                    <button class="btn  btn-secondary btn-lg d-block mt-3" >Update</button>
+                </div>
+                {% else %}
+                <div class="d-grid gap-2">
+                    <button class="btn  btn-secondary btn-lg d-block mt-3" >Register</button>
+                </div>
+                <hr>
+                <a href="{% url 'login' %}" class="btn btn-primary d-block mt-3">Login</a><hr>
+                {% endif %}
+            </form>
+        </div>          
+    </div>
+</div>
+<br/><br/><br/>
+
+
+{% endblock content %}
+
+

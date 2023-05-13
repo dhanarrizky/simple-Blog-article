@@ -1,0 +1,33 @@
+{% extends 'BlogArticle/base.html' %}
+{% block title %}Login{% endblock title %}
+{% block content %}
+<br/><br/>
+<div class='container'>
+    
+    <form class="comment-form mb-5 gray-bg p-5" id="comment-form" method='POST'>
+        <h3 class="mb-4 text-center">Leave a comment</h3>
+        <div class="row">
+            {% csrf_token %}
+            <div class="col-lg-12">
+                {{ form.body }}
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ form.name }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ form.email }}
+                </div>
+            </div>
+        </div>
+        
+        <input class="btn btn-primary" type="submit" name="submit-contact" id="submit_contact"
+        value="Submit Message">
+    </form>
+</div>
+<br/><br/><br/>
+{% endblock content %}
+
+

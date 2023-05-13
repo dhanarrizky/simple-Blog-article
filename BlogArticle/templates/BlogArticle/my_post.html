@@ -1,0 +1,125 @@
+{% extends 'BlogArticle/base.html' %}
+{% load static  %}
+{% block title %}My Article{% endblock title %}
+{% block content %}
+
+ 
+    <section class="single-block-wrapper section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                    <div class="single-post">
+                        <div class="post-header mb-5 text-center">
+                            <!--  
+                                <div class="meta-cat">
+                                    <a class="post-category font-extra text-color text-uppercase font-sm letter-spacing-1"
+                                    href="#">Health ,</a>
+                                    <a class="post-category font-extra text-color text-uppercase font-sm letter-spacing-1"
+                                    href="#">lifestyle</a>
+                                </div>
+                            -->
+                            <h2 class="post-title mt-2">
+                                Here Are All Your Article
+                            </h2><br/>
+                            <!-- own article -->   
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row"> 
+                                    {% if object_list %}
+                                        {% for post in object_list %}
+                                            {% if post.author.id == user.id %}
+                                                <div class="col-lg-4 col-md-6 col-sm-6">
+                                                    <article class="post-grid mb-5 ">
+                                                        <a class="post-thumb mb-4 d-block" href="blog-single.html">
+                                                            <img src="{% static 'images/news/news-1.jpg' %}" alt="" class="img-fluid w-100">
+                                                        </a>
+
+                                                    <div class="post-content-grid">
+                                                        <div class="label-date">
+                                                            <!-- <span class="day">15</span> -->
+                                                            <span class="month text-uppercase">
+                                                                {{ post.post_date }}
+                                                            </span>
+                                                        </div>
+                                                        <span
+                                                        class="cat-name text-color font-extra font-sm text-uppercase letter-spacing">
+                                                        {{ post.title_tag }}</span>
+                                                        <h3 class="post-title mt-1"><a href="{% url 'detile-post' post.pk %}">{{ post.title }}</a></h3>
+                                                        <h5 class="post-title mt-1"><a href="# ">{{ post.author.get_full_name }}</a></h5>
+                                                            <p>
+                                                                {{ post.body | slice:":150" | safe }}
+                                                            </p>
+                                                            
+                                                                <h6 class="btn btn-primary"><a href="{% url 'edit-post' post.pk %}">Edit</a></h6>
+                                                                <h6 class="btn btn-primary"><a href="{% url 'delete-post' post.pk %}">Delete</a></h6>
+                                                        </div>
+                                                    </article>
+                                                </div>
+                                                {% endif %}
+                                        {% endfor %}
+                                    {% else %}
+                                        Sorry, Your Article List is None !!!....
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                    <div class="sidebar sidebar-right">
+                        <div class="sidebar-wrap mt-5 mt-lg-0">
+                            <div class="sidebar-widget about mb-5 text-center p-3">
+                                <div class="about-author">
+                                    {% if user.profile.profile_pic %}
+                                        <img src="{{ user.profile.profile_pic.url }}" alt="" class="img-fluid">
+                                    {% else %}
+                                        <img src="{% static 'images/author.jpg' %}" alt="" class="img-fluid">
+                                    {% endif %}
+                                </div>
+                                
+                                <h4 class="mb-0 mt-4">{{ user.username }}</h4>
+                                <p>{{ user.first_name }} {{ user.last_name }}</p>
+                                <p>{{ user.profile.bio }}</p>
+                                <hr>
+                            </div>
+
+                            <div class="sidebar-widget follow mb-5 text-center">
+                                <h4 class="text-center widget-title">Follow Me</h4>
+                                <div class="follow-socials">
+                                    <a href="#"><i class="ti-facebook"></i></a>
+                                    <a href="#"><i class="ti-twitter"></i></a>
+                                    <a href="#"><i class="ti-instagram"></i></a>
+                                    <a href="#"><i class="ti-youtube"></i></a>
+                                    <a href="#"><i class="ti-pinterest"></i></a>
+                                </div>
+                            </div>
+                            <div class="sidebar-widget category mb-5">
+                                <h4 class="text-center widget-title">Catgeories</h4>
+                                <ul class="list-unstyled">
+                                    {% for c in cat_menu %}
+                                        <li class="align-items-center d-flex justify-content-between">
+                                            <a href="{% url 'category-view' c|slugify %}">{{ c }}</a>
+                                            <span> </span>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <hr>
+                                <br/><br/>
+                                <select class="form-select btn btn-primary" onchange="window.location.href=this.value;">
+                                    <option value="#">Edite Profile</option>
+                                    <option value="{% url 'update-profile' user.profile.id %}">Edite Profile Bio and Picture</option>
+                                    <option value="{% url 'edit-profile'  %}"><a href="{% url 'edit-profile' %}">Profile Register</a></option>
+                                </select>
+                                <hr>
+                                <a href="{% url 'logout' %}" class="btn btn-danger btn-lg d-block mt-3">LogOut</a>
+                                        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endblock content %}

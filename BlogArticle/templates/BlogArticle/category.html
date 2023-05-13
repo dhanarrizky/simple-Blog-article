@@ -1,0 +1,70 @@
+{% extends 'BlogArticle/base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<!--search overlay end-->
+
+<section class="section-padding">
+    <div class="container">
+        <h4>Category : {{ cat }}<h4> <br/><br/>
+        <div class="row">
+            <!-- content card -->
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    {% if cats %}
+                    
+                    {% for post in cats %}
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <article class="post-grid mb-5 ">
+                            <a class="post-thumb mb-4 d-block" href="blog-single.html">
+                                <img src="{% static 'images/news/news-1.jpg' %}" alt="" class="img-fluid w-100">
+                            </a>
+
+                            <div class="post-content-grid">
+                                <div class="label-date">
+                                    <!-- <span class="day">15</span> -->
+                                    <span class="month text-uppercase">
+                                        {{ post.post_date }}
+                                    </span>
+                                </div>
+                                <span
+                                class="cat-name text-color font-extra font-sm text-uppercase letter-spacing">
+                                {{ post.title_tag }}</span>
+                                <h3 class="post-title mt-1"><a href="{% url 'detile-post' post.pk %}">{{ post.title }}</a></h3>
+                                <h5 class="post-title mt-1"><a href="# ">{{ post.author.get_full_name }}</a></h5>
+                                    <p>
+                                        {{ post.body | slice:":150" | safe}} ......
+                                    </p>
+                                </div>
+                            </article>
+                        </div>
+                            
+                        {% endfor %}
+                        {% else %}
+                            <br/><br/>
+                            <h3>
+                                Sorry, This Category is not found !!!
+                            </h3>
+                        {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- page number -->
+                    <div class="m-auto">
+                        <div class="pagination mt-5 pt-4">
+                            <ul class="list-inline">
+                                <li class="list-inline-item"><a href="#" class="active">1</a></li>
+                                <li class="list-inline-item"><a href="#" class="prev-posts"><i
+                                    class="ti-arrow-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

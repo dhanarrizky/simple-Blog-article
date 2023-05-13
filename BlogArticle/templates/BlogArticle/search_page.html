@@ -1,0 +1,28 @@
+{% extends 'BlogArticle/base.html' %}
+{% block title %}search list{% endblock title %}
+{% block content %}
+<br/><br/>
+<div class='container'>
+    <div class="sidebar-widget category mb-5">
+        <ul class="list-unstyled">
+            <h1>search page</h1>
+            <h3>{{ searched }}</h3>
+            <br/>
+            {% if cont %}
+                {% for con in cont %}
+                <div class="alert alert-info" role="alert">
+                    <a href="{% url 'detile-post' con.id %}">
+                        {{ con.title }} | by: {{ con.author.first_name }}
+                    </a><br/>
+                </div>
+                {% endfor %}
+            {% else %}
+                <strong>Hey, I'm sorry {{ search }} is not found !!!</strong>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+<br/><br/><br/>
+{% endblock content %}
+
+

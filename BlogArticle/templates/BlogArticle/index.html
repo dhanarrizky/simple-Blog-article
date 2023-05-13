@@ -1,0 +1,81 @@
+{% extends 'BlogArticle/base.html' %}
+{% load static %}
+{% block title %}Blog Aricle | Home{% endblock title %}
+
+{% block content %}
+
+
+<!--search overlay end-->
+
+<section class="section-padding">
+    <div class="container">
+        <div class="row">
+            <!-- content card -->
+            
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                    {% for post in object_list %}
+                    <div class="col-lg-4 col-md-6 col-sm-6">
+                        <article class="post-grid mb-5 ">
+                            <a class="post-thumb mb-4 d-block" href="#">
+                                {% if post.image %}
+                                    <img src="{{ post.image.url }}" class="img-fluid w-100" alt="featured-image">
+                                {% else %}
+                                    <img src="{% static 'images/fashion/bg-banner.jpg' %}" alt="" class="img-fluid w-100">
+                                    
+                                {% endif %}
+                                
+                            </a>
+
+                            <div class="post-content-grid">
+                                <div class="label-date">
+                                    <!-- <span class="day">15</span> -->
+                                    <span class="month text-uppercase">
+                                        {{ post.post_date }}
+                                    </span>
+                                </div>
+                                <span
+                                class="cat-name text-color font-extra font-sm text-uppercase letter-spacing">
+                                {{ post.title_tag }}</span>
+                                <h3 class="post-title mt-1"><a href="{% url 'detile-post' post.pk %}">{{ post.title }}</a></h3>
+                                <h5 class="post-title mt-1"><a href="{% url 'show-detile-profile' post.author.profile.pk %} ">{{ post.author.get_full_name }}</a></h5>
+                                    <p>
+                                        {{ post.body | slice:":150" | safe}} ......
+                                    </p>
+                                </div>
+                                
+                            </article>
+                        </div>
+                            
+                        {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <!-- page number -->
+                    <div class="m-auto">
+                        <div class="pagination mt-5 pt-4">
+                            <ul class="list-inline">
+                                {% if page_obj.has_previous %}
+                                    <li class="list-inline-item">
+                                        <a href="?page=1">&laquo; first</a>
+                                        <a href="?page={{ page_obj.previous_page_number }}" class="prev-posts"><--</a>
+                                    </li>
+                                {% endif %}
+                                    <li class="list-inline-item"><a href="#" class="active">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+                                {% if page_obj.has_next %}
+                                    <li class="list-inline-item">
+                                        <a href="?page={{ page_obj.next_page_number }}" class="prev-posts">--></a>
+                                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<br/><br/><br/>
+{% endblock content %}

@@ -1,0 +1,52 @@
+{% load static %}
+<header class="header-top bg-dark py-4">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navigation menu-white">
+            <a class="navbar-brand" href="{% url 'homePage' %}">
+                <img src="{% static 'images/logo-w.png' %}" alt="" class="img-fluid">
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse"
+                aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="ti-menu  text-white"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="menu navbar-nav ml-auto">
+                    <li class="nav-item"><a href="{% url 'homePage' %}" class="nav-link">Home</a></li>
+                    {% if cat_menu %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Category
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
+                            {% for c in cat_menu %}
+                                <a class="dropdown-item" href="{% url 'category-view' c|slugify %}">{{ c }}</a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    {% else %}
+                        <li class="nav-item"><a href="{% url 'category-list' %}" class="nav-link">Category</a></li>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                        <li class="nav-item"><a href="{% url 'add-post' %}" class="nav-link">Blog Post</a></li>
+                        <li class="nav-item"><a href="{% url 'my-post' %}" class="nav-link">Profile</a></li>
+                    {% else %}
+                        <li class="nav-item"><a href="{% url 'register' %}" class="nav-link">Register</a></li>
+                        <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">Login</a></li>
+                    {% endif %}
+                </ul>
+                <div class="text-lg-right search ml-4">
+                    <form class="d-flex" role="search" method='POST' action="{% url 'search-page'%}">
+                        {% csrf_token %}
+                        <input class="form-control me-2" name='searched' type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn" type="submit"><i class="ti-search text-white"></i></button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<!-- for when you want to click search icon -->

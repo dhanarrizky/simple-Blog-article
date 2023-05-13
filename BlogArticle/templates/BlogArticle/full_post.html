@@ -1,0 +1,140 @@
+{% extends 'BlogArticle/base.html' %}
+{% load static %}
+{% block title %}Detile Article{% endblock title %}
+{% block content %}
+    <section class="single-block-wrapper section-padding">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
+                    <div class="single-post">
+                        <div class="post-header mb-5 text-center">
+                            <div class="meta-cat">
+                                <a class="post-category font-extra text-color text-uppercase font-sm letter-spacing-1"
+                                href="#">{{ post.category }} </a>
+                            </div>
+                            <h2 class="post-title mt-2">
+                                {{ post.title }}
+                            </h2>
+                            
+                            <div class="post-meta">
+                                <span class="text-uppercase font-sm letter-spacing-1 mr-3">by {{ post.author.first_name }}</span>
+                                <span class="text-uppercase font-sm letter-spacing-1">{{ post.post_date }}</span>
+                            </div>
+                            <div class="post-featured-image mt-5">
+                                {% if post.image %}
+                                    <img src="{{ post.image.url }}" class="img-fluid w-100" alt="featured-image">
+                                {% else %}
+                                    <img src="{% static 'images/fashion/bg-banner.jpg' %}" class="img-fluid w-100" alt="featured-image">
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="post-body">
+                            <div class="entry-content">
+                                <p> {{ post.title_tag }}</p>
+                                    <h2 class="mt-4 mb-3">{{ post.title }}</h2>
+                                    <p> {{ post.body | safe }}</p>
+                                        
+                                    <div class="post-tags py-4">
+                                    
+                                <!-- for categoty -->
+                                <a href="#">#Health</a>
+                                <a href="#">#Game</a>
+                                <a href="#">#Tour</a>
+                            </div>
+                            
+                            
+                            <div
+                            class="tags-share-box center-box d-flex text-center justify-content-between border-top border-bottom py-3">
+                            
+                            <span class="single-comment-o"><i class="fa fa-comment-o"></i></span>
+                            
+                            <div class="post-share">
+                                <form action="{% url 'like' post.pk %}" method="POST">
+                                    <span class="count-number-like">{{ total_likes }}</span>
+                                    {% csrf_token %}
+                                    {% if user.is_authenticated %}
+                                        {% if liked %}
+                                            <button class="penci-post-like single-like-button" type='submit' name='post_id' value='{{ post.id }}'><i class="ti-heart"></i></button>
+                                        {% else %}
+                                            <button class="penci-post-like single-like-button" type='submit' name='post_id' value='{{ post.id }}'><i class="ti-heart-broken"></i></button>    
+                                        {% endif %}
+                                    {% else %}
+                                        <a class="penci-post-like single-like-button" href='{% url "login" %}' ><i class="ti-heart"></i></a>
+                                    {% endif %}
+                                </form>
+                            </div>
+                            
+                            <div class="list-posts-share">
+                                <a target="_blank" rel="nofollow" href="#"><i class="ti-facebook"></i></a>
+                                    <a target="_blank" rel="nofollow" href="#"><i class="ti-twitter"></i></a>
+                                    <a target="_blank" rel="nofollow" href="#"><i class="ti-pinterest"></i></a>
+                                    <a target="_blank" rel="nofollow" href="#"><i class="ti-linkedin"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="post-author d-flex my-5">
+                        <div class="author-img">
+                            {% if post.author.profile.profile_pic %}
+                                <img src="{{ post.author.profile.profile_pic.url }}" alt="" class="avatar avatar-100 photo" width="100"
+                                height="100">
+                            {% else %}
+                                <img src="{% static 'images/author.jpg' %}" alt="" class="avatar avatar-100 photo" width="100"
+                                height="100">
+                            {% endif %}
+                        </div>
+                        <div class="author-content pl-4">
+                            <h4 class="mb-3"><a href="#" title="" rel="author" class="text-capitalize">{{ post.author.get_full_name }}</a>
+                            </h4>
+                            <p>{{ post.author.profile.bio }}</p>
+                                
+                                <a target="_blank" class="author-social" href="#"><i class="ti-facebook"></i></a>
+                                <a target="_blank" class="author-social" href="#"><i class="ti-twitter"></i></a>
+                                <a target="_blank" class="author-social" href="#"><i class="ti-google-plus"></i></a>
+                                <a target="_blank" class="author-social" href="#"><i class="ti-instagram"></i></a>
+                                <a target="_blank" class="author-social" href="#"><i class="ti-pinterest"></i></a>
+                                <a target="_blank" class="author-social" href="#"><i class="ti-tumblr"></i></a>
+                            </div>
+                        </div>
+                    
+
+                    <div class="comment-area my-5">
+                        <h3 class="mb-4 text-center">Comments</h3>
+                                {% if not post.comments.all %}
+                                <h4>No Comments yet !!......</h4><br/>
+                                {% else %}
+                                    {% for com in post.comments.all %}
+                                        <div class="comment-area-box media mt-5">
+                                            <img alt="" src="{% static 'images/blog-user-3.jpg' %}" class="mt-2 img-fluid float-left mr-3">
+                                        
+                                            <div class="media-body ml-4">
+                                                <h4 class="mb-0 ">{{ com.name }}
+                                                    {% if com.email %}
+                                                    -- {{ com.email }}
+                                                    {% endif %}
+                                                      </h4>
+                                                <span class="date-comm font-sm text-capitalize text-color"><i
+                                                    class="ti-time mr-2"></i>{{ com.date_add }}</span>
+                                                
+                                                    <div class="comment-content mt-3">
+                                                        <p>{{ com.body }} </p>
+                                                    </div>
+                                                    <div class="comment-meta mt-4 mt-lg-0 mt-md-0">
+                                                        <a href="#" class="text-underline">Reply</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                                    
+                                    <br/>
+                                    <h6 class="btn btn-primary"><a href="{% url 'add-comment' post.pk %}">Add New Comments</a></h6>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    
+                    {% endblock content %}

@@ -1,0 +1,28 @@
+{% extends 'BlogArticle/base.html' %}
+{% block title %}Edit Profile{% endblock title %}
+{% block content %}
+
+
+<br/><br/><br/>
+<div class="container text-center" style="width: 30rem;">                    
+    <div class="text-center"> 
+        <div class="sidebar-widget subscribe mb-5">
+            <form method='POST' enctype="multipart/form-data">
+                <h4 class="text-center widget-title">Edit Profile</h4>
+                {% csrf_token %}
+                    <textarea class="form-control form-control-message" name="bio" id="message" rows="7" placeholder='{{ profile.bio }}' ></textarea>
+                    {{ form.profile_pic }}<br/>
+                <div class="d-grid gap-2">
+                    
+                    <button class="btn  btn-secondary btn-lg d-block mt-3" >Upload</button>
+                </div>
+            </form>
+        </div>          
+    </div>
+</div>
+<br/><br/><br/>
+
+
+{% endblock content %}
+
+
